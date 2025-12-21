@@ -48,7 +48,7 @@ A Python-based real-time attendance system using face recognition. The applicati
 	```
 
 ## Usage
-- **Add Students:** Fill in student info and take photo samples (at least 10-20 per student recommended).
+- **Add Students:** Fill in student info and take photo samples.
 - **Train Model:** After adding students, click "Train Model" to update the face recognizer.
 - **Mark Attendance:** Use "Face Detector" to recognize faces and mark attendance.
 - **View Attendance:** Attendance is saved in `attendance.csv`.
@@ -58,10 +58,6 @@ A Python-based real-time attendance system using face recognition. The applicati
 - Do not commit `.venv/`, `data/`, `attendance.db`, or other large/binary files (see `.gitignore`).
 - If you add new dependencies, update `requirements.txt`.
 - The project is modular: see `student.py`, `face_recognition.py`, `train.py`, etc.
-- For packaging as an executable, use PyInstaller:
-  ```
-  pyinstaller --onefile --noconsole main.py
-  ```
 
 ## Troubleshooting
 - If the camera does not open, ensure no other app is using it.
