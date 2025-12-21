@@ -1,0 +1,16 @@
+# Face Recognition Attendance System - Dependencies
+# Install all dependencies with: pip install -r requirements.txt
+
+# Image processing
+pillow>=9.0.0
+
+# Computer vision and face recognition (includes LBPH face recognizer)
+# NOTE: Only install opencv-contrib-python, NOT opencv-python (they conflict)
+opencv-contrib-python>=4.5.0
+
+# Numerical operations
+numpy>=1.21.0
+
+# Note: The following are built into Python (no installation needed):
+# - tkinter (GUI framework)
+# - sqlite3 (database)
