@@ -21,7 +21,7 @@ A Python-based real-time attendance system using face recognition. The applicati
 ## Installation & Setup
 1. **Clone the repository:**
 	```
-	git clone https://github.com/yourusername/Real-Time-Attendance-SQLite.git
+	git clone https://github.com/sajid1495/Real-Time-Attendance-SQLite.git
 	cd Real-Time-Attendance-SQLite
 	```
 2. **Create a virtual environment (recommended):**
@@ -40,6 +40,7 @@ A Python-based real-time attendance system using face recognition. The applicati
 4. **Create required folders and files:**
 	- Manually create a folder named `data` in the project root. This will store all captured face images.
 	- Manually create an empty file named `attendance.csv` in the project root. This will store attendance records.
+	- **No need to create the SQLite database file (`attendance.db`) manually. It will be generated automatically on first run.**
 
 5. **Run the application:**
 	```
@@ -54,7 +55,7 @@ A Python-based real-time attendance system using face recognition. The applicati
 - **Data Folder:** All face images are stored locally in the `data/` folder (excluded from git).
 
 ## Notes for Developers
-- Do not commit `.venv/`, `data/`, or other large/binary files (see `.gitignore`).
+- Do not commit `.venv/`, `data/`, `attendance.db`, or other large/binary files (see `.gitignore`).
 - If you add new dependencies, update `requirements.txt`.
 - The project is modular: see `student.py`, `face_recognition.py`, `train.py`, etc.
 - For packaging as an executable, use PyInstaller:

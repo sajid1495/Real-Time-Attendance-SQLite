@@ -130,3 +130,6 @@ classifier.xml
 
 # Ignore attendance file
 attendance.csv
+
+# Ignore SQLite database
+attendance.db
