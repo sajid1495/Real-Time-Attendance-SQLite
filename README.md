@@ -2,6 +2,7 @@
 
 ## Project Overview
 A Python-based real-time attendance system using face recognition. The application provides a user-friendly GUI for managing students, capturing attendance, and training face data. It uses OpenCV for face detection/recognition, Tkinter for the GUI, SQLite for the database, and is designed for easy portability and setup.
+The initial idea was mine after noticing attendance-related problems in my own classroom. I planned a project with some features, and then I found a video on YouTube that was pretty similar to my requirement. I took help from that video, and also I have used GitHub Copilot as my AI assistant for productivity. 
 
 ## Features
 - Student management (add, update, delete student info)
