@@ -10,7 +10,7 @@ from attendance import Attendance
 from developer import Developer
 from helpdesk import HelpDesk
 
-class Face_Recognition_System:
+class Face_Recognition_System: 
     def __init__(self, root):
         self.root = root
         self.root.state('zoomed') 

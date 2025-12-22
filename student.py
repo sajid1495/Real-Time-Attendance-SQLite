@@ -278,7 +278,7 @@ class Student:
         scroll_x = Scrollbar(table_frame, orient=HORIZONTAL, width=15)
         scroll_y = Scrollbar(table_frame, orient=VERTICAL, width=15)
 
-        self.student_table = ttk.Treeview(table_frame, columns=("dept", "course", "year", "sem", "id", "name", "div", "roll", "gender", "dob", "email", "phone", "address", "teacher", "photo"), xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set)
+        self.student_table = ttk.Treeview(table_frame, columns=("id", "roll", "name", "div", "dept", "course", "year", "sem", "gender", "dob", "email", "phone", "address", "teacher", "photo"), xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set)
         
         scroll_x.pack(side=BOTTOM, fill=X)
         scroll_y.pack(side=RIGHT, fill=Y)
@@ -286,15 +286,15 @@ class Student:
         scroll_x.config(command=self.student_table.xview)
         scroll_y.config(command=self.student_table.yview)
 
+        self.student_table.heading("id", text="Student ID")
+        self.student_table.heading("roll", text="Roll No")
+        self.student_table.heading("name", text="Name")
+        self.student_table.heading("div", text="Division")
         self.student_table.heading("dept", text="Department")
         self.student_table.heading("course", text="Course")
         self.student_table.heading("year", text="Year")
         self.student_table.heading("sem", text="Semester")
-        self.student_table.heading("id", text="Student ID")
-        self.student_table.heading("name", text="Name")
-        self.student_table.heading("roll", text="Roll No")
         self.student_table.heading("gender", text="Gender")
-        self.student_table.heading("div", text="Division")
         self.student_table.heading("dob", text="DOB")
         self.student_table.heading("email", text="Email")
         self.student_table.heading("phone", text="Phone No")
@@ -303,21 +303,21 @@ class Student:
         self.student_table.heading("photo", text="Photo Sample Status")
         self.student_table["show"] = "headings" 
 
-        self.student_table.column("dept", width=100)
-        self.student_table.column("course", width=100)
-        self.student_table.column("year", width=100)
-        self.student_table.column("sem", width=100)
-        self.student_table.column("id", width=100)
-        self.student_table.column("name", width=100)    
-        self.student_table.column("div", width=100)
-        self.student_table.column("roll", width=100)
-        self.student_table.column("gender", width=100)
-        self.student_table.column("dob", width=100)
-        self.student_table.column("email", width=150)
-        self.student_table.column("phone", width=100)
-        self.student_table.column("address", width=150)
-        self.student_table.column("teacher", width=100)
-        self.student_table.column("photo", width=150)
+        self.student_table.column("id", width=100, anchor=CENTER)
+        self.student_table.column("roll", width=100, anchor=CENTER)
+        self.student_table.column("name", width=100, anchor=CENTER)
+        self.student_table.column("div", width=100, anchor=CENTER)
+        self.student_table.column("dept", width=100, anchor=CENTER)
+        self.student_table.column("course", width=100, anchor=CENTER)
+        self.student_table.column("year", width=100,anchor=CENTER)
+        self.student_table.column("sem", width=100, anchor=CENTER)
+        self.student_table.column("gender", width=100, anchor=CENTER)
+        self.student_table.column("dob", width=100, anchor=CENTER)
+        self.student_table.column("email", width=150, anchor=CENTER)
+        self.student_table.column("phone", width=100, anchor=CENTER)
+        self.student_table.column("address", width=150, anchor=CENTER)
+        self.student_table.column("teacher", width=100, anchor=CENTER)
+        self.student_table.column("photo", width=150, anchor=CENTER)
 
         self.student_table.pack(fill=BOTH, expand=1)
         self.student_table.bind("<ButtonRelease>", self.get_cursor)
@@ -328,33 +328,45 @@ class Student:
     def add_data(self):
         if self.var_dept.get()=="Select Department" or self.var_std_name.get()=="" or self.var_std_id.get()=="":
             messagebox.showerror("Error", "All Fields are required", parent=self.root)
-        else:
-            try:
-                conn = get_connection()
-                my_cursor = conn.cursor()
-                my_cursor.execute("INSERT INTO student VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (
-                                                                                                                        self.var_dept.get(),
-                                                                                                                        self.var_course.get(),
-                                                                                                                        self.var_year.get(),
-                                                                                                                        self.var_semester.get(),
-                                                                                                                        self.var_std_id.get(),
-                                                                                                                        self.var_std_name.get(),
-                                                                                                                        self.var_div.get(),
-                                                                                                                        self.var_roll.get(),
-                                                                                                                        self.var_gender.get(),
-                                                                                                                        self.var_dob.get(),
-                                                                                                                        self.var_email.get(),
-                                                                                                                        self.var_phone.get(),
-                                                                                                                        self.var_address.get(),
-                                                                                                                        self.var_teacher.get(),
-                                                                                                                        self.var_radio1.get()
-                                                                                                    ))
-                conn.commit()
-                self.fetch_data()
-                conn.close()
-                messagebox.showinfo("Success", "Student details has been added successfully", parent=self.root)
-            except Exception as es:
-                messagebox.showerror("Error", f"Due To: {str(es)}", parent=self.root)   
+            return
+        conn = None
+        my_cursor = None
+        try:
+            conn = get_connection()
+            my_cursor = conn.cursor()
+            my_cursor.execute("INSERT INTO student VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (
+                self.var_dept.get(),
+                self.var_course.get(),
+                self.var_year.get(),
+                self.var_semester.get(),
+                self.var_std_id.get(),
+                self.var_std_name.get(),
+                self.var_div.get(),
+                self.var_roll.get(),
+                self.var_gender.get(),
+                self.var_dob.get(),
+                self.var_email.get(),
+                self.var_phone.get(),
+                self.var_address.get(),
+                self.var_teacher.get(),
+                self.var_radio1.get()
+            ))
+            conn.commit()
+            self.fetch_data()
+            messagebox.showinfo("Success", "Student details has been added successfully", parent=self.root)
+        except Exception as es:
+            messagebox.showerror("Error", f"Due To: {str(es)}", parent=self.root)
+        finally:
+            if my_cursor is not None:
+                try:
+                    my_cursor.close()
+                except:
+                    pass
+            if conn is not None:
+                try:
+                    conn.close()
+                except:
+                    pass
 
     #=========fetch data=========
     def fetch_data(self):
@@ -363,11 +375,31 @@ class Student:
             my_cursor = conn.cursor()
             my_cursor.execute("SELECT * FROM student")
             data = my_cursor.fetchall()
-            
+
             self.student_table.delete(*self.student_table.get_children())
             if len(data) != 0:
                 for i in data:
-                    self.student_table.insert("", END, values=tuple(i))
+                    # Always use the string as-is to preserve leading zeros
+                    id_str = str(i[4])
+                    roll_str = str(i[7])
+                    reordered = (
+                        id_str,  # id (preserve leading zeros)
+                        roll_str,  # roll
+                        i[5],  # name
+                        i[6],  # div
+                        i[0],  # dept
+                        i[1],  # course
+                        i[2],  # year
+                        i[3],  # sem
+                        i[8],  # gender
+                        i[9],  # dob
+                        i[10], # email
+                        i[11], # phone
+                        i[12], # address
+                        i[13], # teacher
+                        i[14], # photo
+                    )
+                    self.student_table.insert("", END, values=reordered)
             conn.close()
         except Exception as es:
             messagebox.showerror("Error", f"Due To: {str(es)}", parent=self.root)
@@ -378,22 +410,25 @@ class Student:
         cursor_focus = self.student_table.focus()
         content = self.student_table.item(cursor_focus)
         data = content["values"]
-
-        self.var_dept.set(data[0])
-        self.var_course.set(data[1])
-        self.var_year.set(data[2])
-        self.var_semester.set(data[3])
-        self.var_std_id.set(data[4])
-        self.var_std_name.set(data[5])
-        self.var_div.set(data[6])
-        self.var_roll.set(data[7])
+        if not data:
+            return
+        # data order: id, roll, name, div, dept, course, year, sem, gender, dob, email, phone, address, teacher, photo
+        # Always set as string to preserve original formatting (including leading zeros if present)
+        self.var_std_id.set(str(data[0]))
+        self.var_roll.set(str(data[1]))
+        self.var_std_name.set(data[2])
+        self.var_div.set(data[3])
+        self.var_dept.set(data[4])
+        self.var_course.set(data[5])
+        self.var_year.set(data[6])
+        self.var_semester.set(data[7])
         self.var_gender.set(data[8])
         self.var_dob.set(data[9])
         self.var_email.set(data[10])
         self.var_phone.set(data[11])
         self.var_address.set(data[12])
         self.var_teacher.set(data[13])
-        self.var_radio1.set(data[14])   
+        self.var_radio1.set(data[14])
 
 
 
@@ -425,8 +460,9 @@ class Student:
                                                                                                                                                                                                                                     self.var_std_id.get()
                                                                                                                                                                                                                                 ))
                     conn.commit()
-                    self.fetch_data()
+                    my_cursor.close()
                     conn.close()
+                    self.fetch_data()
                     messagebox.showinfo("Success", "Student details successfully updated", parent=self.root)
                 else:
                     if not Update:
@@ -438,26 +474,29 @@ class Student:
 
     #=======delete function=======
     def delete_data(self):
-        if self.var_std_id.get()=="":
+        if self.var_std_id.get() == "":
             messagebox.showerror("Error", "Student ID must be required", parent=self.root)
-        else:
-            try:
-                delete = messagebox.askyesno("Student Delete Page", "Do you want to delete this student?", parent=self.root)
-                if delete > 0:
-                    conn = get_connection()
-                    my_cursor = conn.cursor()
-                    sql = "DELETE FROM student WHERE Student_id=?"
-                    val = (self.var_std_id.get(),)
-                    my_cursor.execute(sql, val)
-                    conn.commit()
-                    self.fetch_data()
-                    conn.close()
-                    messagebox.showinfo("Delete", "Successfully deleted student details", parent=self.root)
-                else:
-                    if not delete:
-                        return  
-            except Exception as es:
-                messagebox.showerror("Error", f"Due To: {str(es)}", parent=self.root)
+            return
+        try:
+            delete = messagebox.askyesno("Student Delete Page", "Do you want to delete this student?", parent=self.root)
+            if not delete:
+                return
+            conn = get_connection()
+            my_cursor = conn.cursor()
+            sql = "DELETE FROM student WHERE Student_id=?"
+            val = (self.var_std_id.get(),)  # Always use string, preserves leading zeros
+            my_cursor.execute(sql, val)
+            deleted_count = my_cursor.rowcount
+            conn.commit()
+            my_cursor.close()
+            conn.close()
+            self.fetch_data()
+            if deleted_count == 0:
+                messagebox.showwarning("Delete", "No student found with this ID. It may be due to leading zeros mismatch.", parent=self.root)
+            else:
+                messagebox.showinfo("Delete", "Successfully deleted student details", parent=self.root)
+        except Exception as es:
+            messagebox.showerror("Error", f"Due To: {str(es)}", parent=self.root)
 
     #========reset function========
     def reset_data(self):
@@ -504,8 +543,9 @@ class Student:
                                                                                                                                                                                                                                     self.var_std_id.get()
                                                                                                                                                                                                                                 ))
                 conn.commit()
-                self.fetch_data()
+                my_cursor.close()
                 conn.close()
+                self.fetch_data()
                 
                 # Save student ID before resetting
                 student_id = self.var_std_id.get()
