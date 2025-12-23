@@ -44,37 +44,37 @@ class Face_Recognition_System:
         btn1_text.place(x=255, y=310, width=180, height=40)
 
 
-        #detect face button
-        detect_face = Image.open(r"images\detect_faces.png")  
-        detect_face = detect_face.resize((180, 180), Image.Resampling.LANCZOS)
-        self.photodetect_face = ImageTk.PhotoImage(detect_face)
-
-        btn2 = Button(bg_image, image=self.photodetect_face, cursor="hand2", command=self.face_recognition)
-        btn2.place(x=535, y=130, width=180, height=180)
-
-        btn2_text = Button(bg_image, text="Face Detector", cursor="hand2", command=self.face_recognition, font=("Calibri", 14, "bold"))
-        btn2_text.place(x=535, y=310, width=180, height=40)
-
-        #attendance button
-        attendance = Image.open(r"images\attendance.png")  
-        attendance = attendance.resize((180, 180), Image.Resampling.LANCZOS)
-        self.photoattendance = ImageTk.PhotoImage(attendance)
-
-        btn3 = Button(bg_image, image=self.photoattendance, cursor="hand2", command=self.attendance)
-        btn3.place(x=815, y=130, width=180, height=180)
-
-        btn3_text = Button(bg_image, text="Attendance", cursor="hand2", command=self.attendance, font=("Calibri", 14, "bold"))
-        btn3_text.place(x=815, y=310, width=180, height=40)
-
-        #model training
+        # train model button 
         traindata = Image.open(r"images\train_data.png")  
         traindata = traindata.resize((180, 180), Image.Resampling.LANCZOS)
         self.phototraindata = ImageTk.PhotoImage(traindata)
 
-        btn4 = Button(bg_image, image=self.phototraindata, cursor="hand2", command=self.train_classifier)
+        btn2 = Button(bg_image, image=self.phototraindata, cursor="hand2", command=self.train_classifier)
+        btn2.place(x=535, y=130, width=180, height=180)
+
+        btn2_text = Button(bg_image, text="Train Model", cursor="hand2", command=self.train_classifier, font=("Calibri", 14, "bold"))
+        btn2_text.place(x=535, y=310, width=180, height=40)
+
+        # face detector button 
+        detect_face = Image.open(r"images\detect_faces.png")  
+        detect_face = detect_face.resize((180, 180), Image.Resampling.LANCZOS)
+        self.photodetect_face = ImageTk.PhotoImage(detect_face)
+
+        btn3 = Button(bg_image, image=self.photodetect_face, cursor="hand2", command=self.face_recognition)
+        btn3.place(x=815, y=130, width=180, height=180)
+
+        btn3_text = Button(bg_image, text="Face Detector", cursor="hand2", command=self.face_recognition, font=("Calibri", 14, "bold"))
+        btn3_text.place(x=815, y=310, width=180, height=40)
+
+        # attendance button 
+        attendance = Image.open(r"images\attendance.png")  
+        attendance = attendance.resize((180, 180), Image.Resampling.LANCZOS)
+        self.photoattendance = ImageTk.PhotoImage(attendance)
+
+        btn4 = Button(bg_image, image=self.photoattendance, cursor="hand2", command=self.attendance)
         btn4.place(x=1095, y=130, width=180, height=180)
 
-        btn4_text = Button(bg_image, text="Train Model", cursor="hand2", command=self.train_classifier, font=("Calibri", 14, "bold"))
+        btn4_text = Button(bg_image, text="Attendance", cursor="hand2", command=self.attendance, font=("Calibri", 14, "bold"))
         btn4_text.place(x=1095, y=310, width=180, height=40)
 
         #photos button
