@@ -120,10 +120,6 @@ class Face_Recognition_System:
 
         btn8_text = Button(bg_image, text="Exit", cursor="hand2", command=self.exit_app, font=("Calibri", 14, "bold"))
         btn8_text.place(x=1095, y=600, width=180, height=40)
-        
-
-    def open_img(self):
-        os.startfile("data")
 
 
 
@@ -152,6 +148,10 @@ class Face_Recognition_System:
             return
         self.attendance_window = Toplevel(self.root)
         self.app = Attendance(self.attendance_window)
+
+    #open images function
+    def open_img(self):
+        os.startfile("data")
 
     #developer function
     def developer(self):

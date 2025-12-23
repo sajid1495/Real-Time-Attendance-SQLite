@@ -286,38 +286,38 @@ class Student:
         scroll_x.config(command=self.student_table.xview)
         scroll_y.config(command=self.student_table.yview)
 
-        self.student_table.heading("id", text="Student ID")
-        self.student_table.heading("roll", text="Roll No")
-        self.student_table.heading("name", text="Name")
-        self.student_table.heading("div", text="Division")
-        self.student_table.heading("dept", text="Department")
-        self.student_table.heading("course", text="Course")
-        self.student_table.heading("year", text="Year")
-        self.student_table.heading("sem", text="Semester")
-        self.student_table.heading("gender", text="Gender")
-        self.student_table.heading("dob", text="DOB")
-        self.student_table.heading("email", text="Email")
-        self.student_table.heading("phone", text="Phone No")
-        self.student_table.heading("address", text="Address")
-        self.student_table.heading("teacher", text="Teacher")
-        self.student_table.heading("photo", text="Photo Sample Status")
+        self.student_table.heading("id", text="Student ID",anchor="e")
+        self.student_table.heading("roll", text="Roll No",anchor="e")
+        self.student_table.heading("name", text="Name",anchor="e")
+        self.student_table.heading("div", text="Section",anchor="e")
+        self.student_table.heading("dept", text="Department",anchor="e")
+        self.student_table.heading("course", text="Course",anchor="e")
+        self.student_table.heading("year", text="Year",anchor="e")
+        self.student_table.heading("sem", text="Semester",anchor="e")
+        self.student_table.heading("gender", text="Gender",anchor="e")
+        self.student_table.heading("dob", text="DOB",anchor="e")
+        self.student_table.heading("email", text="Email",anchor="e")
+        self.student_table.heading("phone", text="Phone No",anchor="e")
+        self.student_table.heading("address", text="Address",anchor="e")
+        self.student_table.heading("teacher", text="Teacher",anchor="e")
+        self.student_table.heading("photo", text="Photo Sample Status",anchor="e")
         self.student_table["show"] = "headings" 
 
-        self.student_table.column("id", width=100, anchor=CENTER)
-        self.student_table.column("roll", width=100, anchor=CENTER)
-        self.student_table.column("name", width=100, anchor=CENTER)
-        self.student_table.column("div", width=100, anchor=CENTER)
-        self.student_table.column("dept", width=100, anchor=CENTER)
-        self.student_table.column("course", width=100, anchor=CENTER)
-        self.student_table.column("year", width=100,anchor=CENTER)
-        self.student_table.column("sem", width=100, anchor=CENTER)
-        self.student_table.column("gender", width=100, anchor=CENTER)
-        self.student_table.column("dob", width=100, anchor=CENTER)
-        self.student_table.column("email", width=150, anchor=CENTER)
-        self.student_table.column("phone", width=100, anchor=CENTER)
-        self.student_table.column("address", width=150, anchor=CENTER)
-        self.student_table.column("teacher", width=100, anchor=CENTER)
-        self.student_table.column("photo", width=150, anchor=CENTER)
+        self.student_table.column("id", width=100, anchor="e")
+        self.student_table.column("roll", width=100, anchor="e")
+        self.student_table.column("name", width=100, anchor="e")
+        self.student_table.column("div", width=100, anchor="e")
+        self.student_table.column("dept", width=100, anchor="e")
+        self.student_table.column("course", width=100, anchor="e")
+        self.student_table.column("year", width=100,anchor="e")
+        self.student_table.column("sem", width=100, anchor="e")
+        self.student_table.column("gender", width=100, anchor="e")
+        self.student_table.column("dob", width=100, anchor="e")
+        self.student_table.column("email", width=150, anchor="e")
+        self.student_table.column("phone", width=100, anchor="e")
+        self.student_table.column("address", width=150, anchor="e")
+        self.student_table.column("teacher", width=100, anchor="e")
+        self.student_table.column("photo", width=150, anchor="e")
 
         self.student_table.pack(fill=BOTH, expand=1)
         self.student_table.bind("<ButtonRelease>", self.get_cursor)
@@ -379,11 +379,10 @@ class Student:
             self.student_table.delete(*self.student_table.get_children())
             if len(data) != 0:
                 for i in data:
-                    # Always use the string as-is to preserve leading zeros
                     id_str = str(i[4])
                     roll_str = str(i[7])
                     reordered = (
-                        id_str,  # id (preserve leading zeros)
+                        id_str,  # student_id
                         roll_str,  # roll
                         i[5],  # name
                         i[6],  # div
@@ -413,7 +412,6 @@ class Student:
         if not data:
             return
         # data order: id, roll, name, div, dept, course, year, sem, gender, dob, email, phone, address, teacher, photo
-        # Always set as string to preserve original formatting (including leading zeros if present)
         self.var_std_id.set(str(data[0]))
         self.var_roll.set(str(data[1]))
         self.var_std_name.set(data[2])
@@ -484,7 +482,7 @@ class Student:
             conn = get_connection()
             my_cursor = conn.cursor()
             sql = "DELETE FROM student WHERE Student_id=?"
-            val = (self.var_std_id.get(),)  # Always use string, preserves leading zeros
+            val = (self.var_std_id.get(),) 
             my_cursor.execute(sql, val)
             deleted_count = my_cursor.rowcount
             conn.commit()
@@ -578,7 +576,7 @@ class Student:
                         break
                 cap.release()
                 cv2.destroyAllWindows()
-                # Only reset the photo sample radio button, not all fields
+
                 self.var_radio1.set("Yes")
                 messagebox.showinfo("Result", "Generating data set completed!", parent=self.root)
             except Exception as es:
