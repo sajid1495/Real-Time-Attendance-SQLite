@@ -166,24 +166,24 @@ class Attendance:
         scroll_y.config(command=self.AttendanceReportTable.yview)
 
         # Table Headings
-        self.AttendanceReportTable.heading("id", text="Attendance ID")
-        self.AttendanceReportTable.heading("roll", text="Roll")
-        self.AttendanceReportTable.heading("name", text="Name")
-        self.AttendanceReportTable.heading("department", text="Department")
-        self.AttendanceReportTable.heading("time", text="Time")
-        self.AttendanceReportTable.heading("date", text="Date")
-        self.AttendanceReportTable.heading("attendance", text="Attendance")
+        self.AttendanceReportTable.heading("id", text="Attendance ID", anchor='e')
+        self.AttendanceReportTable.heading("roll", text="Roll", anchor='e')
+        self.AttendanceReportTable.heading("name", text="Name", anchor='e')
+        self.AttendanceReportTable.heading("department", text="Department", anchor='e')
+        self.AttendanceReportTable.heading("time", text="Time", anchor='e')
+        self.AttendanceReportTable.heading("date", text="Date", anchor='e')
+        self.AttendanceReportTable.heading("attendance", text="Attendance", anchor='e')
 
         self.AttendanceReportTable["show"] = "headings"
 
         # Column Widths
-        self.AttendanceReportTable.column("id", width=100)
-        self.AttendanceReportTable.column("roll", width=80)
-        self.AttendanceReportTable.column("name", width=100)
-        self.AttendanceReportTable.column("department", width=100)
-        self.AttendanceReportTable.column("time", width=80)
-        self.AttendanceReportTable.column("date", width=100)
-        self.AttendanceReportTable.column("attendance", width=100)
+        self.AttendanceReportTable.column("id", width=100, anchor='e')
+        self.AttendanceReportTable.column("roll", width=80, anchor='e')
+        self.AttendanceReportTable.column("name", width=100, anchor='e')
+        self.AttendanceReportTable.column("department", width=100, anchor='e')
+        self.AttendanceReportTable.column("time", width=80, anchor='e')
+        self.AttendanceReportTable.column("date", width=100, anchor='e')
+        self.AttendanceReportTable.column("attendance", width=100, anchor='e')
 
         self.AttendanceReportTable.pack(fill=BOTH, expand=1)
         self.AttendanceReportTable.bind("<ButtonRelease-1>", self.get_cursor)
