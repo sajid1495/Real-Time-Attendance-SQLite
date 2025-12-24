@@ -14,7 +14,9 @@ The initial idea was mine after noticing attendance-related problems in my own c
 - Clean, modern Tkinter GUI
 - Portable: No MySQL or external DB required (uses SQLite)
 - Data privacy: Local storage, no cloud upload
+
 ** Check out 'Project Demo' folder for core features appearance.**  
+
 ## Requirements
 - Python 3.8+
 - Windows (recommended; Linux/Mac may require minor tweaks)
