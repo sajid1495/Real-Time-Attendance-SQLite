@@ -244,7 +244,7 @@ class Student:
         lbl_img_right.place(x=5, y=0, width=720, height=150)
 
 
-        #search system
+        #search system 
         search_frame = LabelFrame(Right_frame, bd=2, bg="white", relief=RIDGE, text="Search System", font=("Calibri", 12, "bold"))
         search_frame.place(x=5, y=160, width=720, height=70)
 
@@ -252,19 +252,19 @@ class Student:
         search_label.grid(row=0, column=0, padx=10, pady=5, sticky=W)
 
         search_combo = ttk.Combobox(search_frame, textvariable=self.var_search, font=("Calibri", 12, "bold"), state="readonly", width=15)
-        search_combo["values"] = ("Select", "Roll No", "Phone No")
+        search_combo["values"] = ("Select", "ID", "Name", "Roll No", "Phone No")
         search_combo.current(0)
         search_combo.grid(row=0, column=1, padx=2, pady=5, sticky=W)
 
-        search_entry = ttk.Entry(search_frame, width=20, font=("Calibri", 12, "bold"))
-        search_entry.grid(row=0, column=2, padx=10, pady=5, sticky=W)
+        self.search_entry = ttk.Entry(search_frame, width=20, font=("Calibri", 12, "bold"))
+        self.search_entry.grid(row=0, column=2, padx=10, pady=5, sticky=W)
 
-        search_btn = Button(search_frame, text="Search", width=12, font=("Calibri", 11, "bold"), bg="blue", fg="white")
+        search_btn = Button(search_frame, text="Search", width=12, font=("Calibri", 11, "bold"), bg="blue", fg="white", command=self.search_data)
         search_btn.grid(row=0, column=3, padx=4, pady=5)
 
-        showAll_btn = Button(search_frame, text="Show All", width=12, font=("Calibri", 11, "bold"), bg="blue", fg="white")
+        showAll_btn = Button(search_frame, text="Show All", width=12, font=("Calibri", 11, "bold"), bg="blue", fg="white", command=self.fetch_data)
         showAll_btn.grid(row=0, column=4, padx=4, pady=5)   
-
+    
 
         #table frame
         table_frame = Frame(Right_frame, bd=2, bg="white", relief=RIDGE)
@@ -370,6 +370,9 @@ class Student:
 
     #=========fetch data=========
     def fetch_data(self):
+        # Reset search dropdown and input box
+        self.var_search.set("Select")
+        self.search_entry.delete(0, END)
         try:
             conn = get_connection()
             my_cursor = conn.cursor()
@@ -427,6 +430,61 @@ class Student:
         self.var_address.set(data[12])
         self.var_teacher.set(data[13])
         self.var_radio1.set(data[14])
+
+
+    #========search data========
+    def search_data(self):
+        search_by = self.var_search.get()
+        search_value = self.search_entry.get().strip()
+        if search_by == "Select" or search_value == "":
+            messagebox.showerror("Error", "Please select a search criteria and enter a value", parent=self.root)
+            return
+        query = None
+        if search_by == "ID":
+            query = ("SELECT * FROM student WHERE Student_id=?", (search_value,))
+        elif search_by == "Name":
+            query = ("SELECT * FROM student WHERE Name LIKE ?", (f"%{search_value}%",))
+        elif search_by == "Roll No":
+            query = ("SELECT * FROM student WHERE Roll=?", (search_value,))
+        elif search_by == "Phone No":
+            query = ("SELECT * FROM student WHERE Phone=?", (search_value,))
+        else:
+            messagebox.showerror("Error", "Invalid search criteria", parent=self.root)
+            return
+        try:
+            conn = get_connection()
+            my_cursor = conn.cursor()
+            my_cursor.execute(*query)
+            data = my_cursor.fetchall()
+            self.student_table.delete(*self.student_table.get_children())
+            if len(data) != 0:
+                for i in data:
+                    id_str = str(i[4])
+                    roll_str = str(i[7])
+                    reordered = (
+                        id_str,  # student_id
+                        roll_str,  # roll
+                        i[5],  # name
+                        i[6],  # div
+                        i[0],  # dept
+                        i[1],  # course
+                        i[2],  # year
+                        i[3],  # sem
+                        i[8],  # gender
+                        i[9],  # dob
+                        i[10], # email
+                        i[11], # phone
+                        i[12], # address
+                        i[13], # teacher
+                        i[14], # photo
+                    )
+                    self.student_table.insert("", END, values=reordered)
+            else:
+                messagebox.showinfo("Result", "No matching student found.", parent=self.root)
+            my_cursor.close()
+            conn.close()
+        except Exception as es:
+            messagebox.showerror("Error", f"Due To: {str(es)}", parent=self.root)
 
 
 
